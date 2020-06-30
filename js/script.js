@@ -115,9 +115,10 @@ btnConnect.forEach(btn => {
 function showModal () {
     modal.classList.add('show');
     document.body.style.overflow = 'hidden';
+    clearInterval(modalTimer);
 }
 
-
+let modalTimer = setTimeout(showModal, 5000);
 
 function hideModal () {
     document.body.style.overflow = '';
@@ -141,10 +142,19 @@ document.addEventListener('keydown', (event) => {
 const close = document.querySelector('[data-close]');
 close.addEventListener('click', hideModal);
 
+function showModalByScroll() {
+    console.log(document.documentElement.scrollHeight);
+    console.log(document.documentElement.scrollTop);
+    console.log(document.documentElement.clientHeight);
+
+    if (document.documentElement.scrollHeight - document.documentElement.scrollTop - document.documentElement.clientHeight < 3) {
+        showModal();
+        document.removeEventListener('scroll', showModalByScroll);
+    }
+}
 
 
-
-
+document.addEventListener('scroll', showModalByScroll);
 
 
 
